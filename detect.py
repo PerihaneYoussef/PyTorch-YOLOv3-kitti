@@ -271,6 +271,6 @@ for img_i, (path, detections) in enumerate(zip(imgs, img_detections)):
     plt.axis('off')
     plt.gca().xaxis.set_major_locator(NullLocator())
     plt.gca().yaxis.set_major_locator(NullLocator())
-    plt.savefig('/content/PyTorch-YOLOv3-kitti/output/%d.png' % (img_i), pad_inches=0.0)
+    plt.savefig('/content/PyTorch-YOLOv3-kitti/output/%s' % (file_name), pad_inches=0.0)
     plt.show()
     plt.close()
