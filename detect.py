@@ -21,7 +21,7 @@ import matplotlib.patches as patches
 from matplotlib.ticker import NullLocator
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
-
+from pathlib import Path    
 
 
 import numpy as np
@@ -198,7 +198,8 @@ print ('\nSaving images:')
 for img_i, (path, detections) in enumerate(zip(imgs, img_detections)):
 
     print ("(%d) Image: '%s'" % (img_i, path))
-
+    file_name = Path(path).name
+    print("FILENAME", file_name)
     # Create plot
     img = np.array(Image.open(path))
     plt.figure()
@@ -207,7 +208,10 @@ for img_i, (path, detections) in enumerate(zip(imgs, img_detections)):
     
     
     #############################
-    lidar = np.load('/content/data_sample/point_cloud_npy/117.npy').reshape((-1, 4))[:, :3]
+    #names=['171.npy', '90.npy']
+    depth_map_name = 'npy'
+    npy_name = file_name.replace('jpg', depth_map_name)
+    lidar = np.load('/content/data_sample/point_cloud_npy/'+npy_name).reshape((-1, 4))[:, :3]
     height, width = img.shape[:2]
     depth_map = generate_dispariy_from_velo(lidar, height, width)
     depth_map=np.clip(depth_map, 0,255)
@@ -257,7 +261,7 @@ for img_i, (path, detections) in enumerate(zip(imgs, img_detections)):
             normalize = mcolors.Normalize(vmin=np.min(depth_map), vmax=np.max(depth_map))
             # Add the bbox to the plot
             ax.scatter(X, Y, c=prediction_depth_box[indices], s=1,cmap=colormap, norm=normalize )
-            plt.show()
+            
             #ax.add_patch(bbox)
             # Add label
             #plt.text(x1, y1-30, s=classes[int(cls_pred)]+' '+ str('%.4f'%cls_conf.item()), color='white', verticalalignment='top',
@@ -267,5 +271,6 @@ for img_i, (path, detections) in enumerate(zip(imgs, img_detections)):
     plt.axis('off')
     plt.gca().xaxis.set_major_locator(NullLocator())
     plt.gca().yaxis.set_major_locator(NullLocator())
-    plt.savefig('output/%d.png' % (img_i), bbox_inches='tight', pad_inches=0.0)
+    plt.savefig('/content/PyTorch-YOLOv3-kitti/output/%d.png' % (img_i), pad_inches=0.0)
+    plt.show()
     plt.close()
