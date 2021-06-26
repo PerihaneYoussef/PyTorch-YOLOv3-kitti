@@ -19,13 +19,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.ticker import NullLocator
 
-kitti_weights = 'weights/kitti.weights'
+kitti_weights = '/content/PyTorch-YOLOv3-kitti/weights/yolov3-kitti.weights'
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--image_folder', type=str, default='data/samples/', help='path to dataset')
-parser.add_argument('--config_path', type=str, default='config/yolov3-kitti.cfg', help='path to model config file')
+parser.add_argument('--image_folder', type=str, default='/content/PyTorch-YOLOv3-kitti/data/samples', help='path to dataset')
+parser.add_argument('--config_path', type=str, default='/content/PyTorch-YOLOv3-kitti/config/yolov3-kitti.cfg', help='path to model config file')
 parser.add_argument('--weights_path', type=str, default=kitti_weights, help='path to weights file')
-parser.add_argument('--class_path', type=str, default='data/kitti.names', help='path to class label file')
+parser.add_argument('--class_path', type=str, default='/content/PyTorch-YOLOv3-kitti/data/kitti.names', help='path to class label file')
 parser.add_argument('--conf_thres', type=float, default=0.8, help='object confidence threshold')
 parser.add_argument('--nms_thres', type=float, default=0.4, help='iou thresshold for non-maximum suppression')
 parser.add_argument('--batch_size', type=int, default=1, help='size of the batches')
@@ -86,8 +86,8 @@ for batch_i, (img_paths, input_imgs) in enumerate(dataloader):
     img_detections.extend(detections)
 
 # Bounding-box colors
-#cmap = plt.get_cmap('tab20b')
-cmap = plt.get_cmap('Vega20b')
+cmap = plt.get_cmap('tab20b')
+#cmap = plt.get_cmap('Vega20b')
 colors = [cmap(i) for i in np.linspace(0, 1, 20)]
 
 print ('\nSaving images:')
